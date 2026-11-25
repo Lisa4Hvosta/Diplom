@@ -47,8 +47,22 @@ class TestApiNegative:
         assert "limit" in _error_text(response.json())
 
     @allure.title(
-            "API-08: PATCH на эндпоинте списка отклоняется (баг №1 исправлен)"
-        )
+        "API-08: PATCH на эндпоинте списка отклоняется по документации"
+    )
+    @allure.issue(
+        name="Баг-репорт: PATCH /v1.4/movie возвращает 200 вместо 405",
+        url="https://yozhka.lukit.ru/workspace/CPERVYYI/project/DIPLRAB/board/CPERVYYI-11",
+    )
+    @pytest.mark.xfail(
+        reason="Баг внешнего API: PATCH /v1.4/movie возвращает 200 OK со "
+               "списком фильмов вместо 405 Method Not Allowed. Репорт "
+               "заведён в TestIT, статус «Открыт». Проверено 25.11.2026.",
+        strict=True,
+    )
     def test_patch_method_rejected(self, api_client: KinopoiskClient) -> None:
+        """По документации сервер должен отклонить метод PATCH кодом 405.
+
+        Фактически возвращает 200 — известный дефект, тест помечен xfail.
+        """
         response = api_client.patch_movies({"limit": 5})
-        assert response.status_code in (400, 404, 405)
+        assert response.status_code == 405
