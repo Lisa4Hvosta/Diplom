@@ -44,5 +44,4 @@ class TestUiKinopoisk:
     @allure.title("UI-6: на главной есть блок с карточками фильмов")
     def test_main_page_shows_movies(self, home_page: HomePage) -> None:
         home_page.open()
-        first_card = home_page.page.locator('a[href^="/film/"]').first
-        expect(first_card).to_be_visible()
+        expect(home_page.first_movie_card()).to_be_visible()

@@ -6,6 +6,10 @@ from api.client import KinopoiskClient
 from config.settings import load_api_config
 
 pytestmark = pytest.mark.api
+BUG_REPORT_URL = (
+    "https://yozhka.lukit.ru/workspace/CPERVYYI"
+    "/project/DIPLRAB/board/CPERVYYI-11"
+)
 
 
 def _error_text(payload: dict) -> str:
@@ -51,12 +55,12 @@ class TestApiNegative:
     )
     @allure.issue(
         name="Баг-репорт: PATCH /v1.4/movie возвращает 200 вместо 405",
-        url="https://yozhka.lukit.ru/workspace/CPERVYYI/project/DIPLRAB/board/CPERVYYI-11",
+        url=BUG_REPORT_URL,
     )
     @pytest.mark.xfail(
         reason="Баг внешнего API: PATCH /v1.4/movie возвращает 200 OK со "
                "списком фильмов вместо 405 Method Not Allowed. Репорт "
-               "заведён в TestIT, статус «Открыт». Проверено 25.11.2026.",
+               "заведён в Ёжке, статус «Открыт». Проверено 25.11.2026.",
         strict=True,
     )
     def test_patch_method_rejected(self, api_client: KinopoiskClient) -> None:

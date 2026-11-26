@@ -14,16 +14,30 @@
 ## Структура проекта
 
 ```
-diplom-project/
-├── api/                # API-тесты и вспомогательные модули
-├── ui/                 # Page Objects и UI-тесты (Playwright)
-├── tests/              # Общие фикстуры, утилиты, конфиги
-├── allure-results/     # Отчёты Allure (создаётся автоматически)
-├── requirements.txt    # Зависимости
-└── README.md           # Текущий файл
+├── api/
+│   ├── client.py
+│   └── tests/
+│       ├── test_positive_api.py
+│       └── test_negative_api.py
+├── ui/
+│   ├── pages/
+│   └── tests/
+├── config/
+├── .env.example
+├── requirements.txt
+└── README.md
+
 ```
 
 ## Установка и запуск
+
+### Подготовка укружения
+
+Скопируйте файл `.env.example` в `.env` и укажите свой токен kinopoisk.dev:
+
+```text
+KINOPOISK_TOKEN=ваш_токен
+```
 
 ### Установка зависимостей
 
@@ -63,7 +77,7 @@ python -m flake8 api ui
 
 - **Общее количество тестов:** 18 (API + UI)
 - **Статус:** 17 passed, 1 expected failure
-- **Expected failure:** негативный тест API-08 зафиксировал известный дефект внешнего API (PATCH /v1.4/movie возвращает 200 вместо 405), баг-репорт заведён в TestIT, статус «Открыт»
+- **Expected failure:** негативный тест API-08 зафиксировал известный дефект внешнего API (PATCH /v1.4/movie возвращает 200 вместо 405), баг-репорт заведён в Ёжке, статус «Открыт»
 - **Отчётность:** Allure-отчёт с детализацией по шагам, длительности и браузеру (Chromium)
 
 ## Примеры сценариев

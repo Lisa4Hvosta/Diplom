@@ -2,6 +2,7 @@
 from typing import Optional
 
 from playwright.sync_api import (
+    Locator,
     TimeoutError as PlaywrightTimeoutError,
     expect,
 )
@@ -16,6 +17,7 @@ class HomePage(BasePage):
     URL: str = "https://www.kinopoisk.ru/"
     SEARCH_INPUT: str = '[aria-label="Фильмы, сериалы, персоны"]'
     CLOSE_DIALOG_BUTTON: str = '[aria-label="Закрыть коммуникацию"]'
+    FIRST_MOVIE_CARD: str = 'a[href^="/film/"]'
 
     def open(self, url: Optional[str] = None) -> "HomePage":
         """Открывает страницу и закрывает всплывающие окна."""
@@ -30,6 +32,10 @@ class HomePage(BasePage):
         field.fill(query)
         self.page.keyboard.press("Enter")
         return SearchPage(self.page)
+
+    def first_movie_card(self) -> Locator:
+        """Возвращает первую карточку фильма на главной странице."""
+        return self.page.locator(self.FIRST_MOVIE_CARD).first
 
     def _dismiss_dialogs(self) -> None:
         """Закрывает диалог, если он появился (без sleep)."""
